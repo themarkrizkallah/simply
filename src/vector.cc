@@ -5,7 +5,10 @@
 using namespace std;
 
 // Constructor + Big 5
-Vector::Vector(int n, int x, bool t): t{t}{v.assign(n, x);}
+Vector::Vector(int n, int x, bool t): t{t}
+{
+	v.assign(n, x);
+}
 
 Vector::Vector(const vector<float> &a, bool t): t{t}, v{a} {}
 
@@ -109,9 +112,20 @@ void Vector::transpose(){t = !t;}
 Vector Vector::transposeNew() const{return Vector(v, !t);}
 
 // Utility
-int Vector::getDimension() const{return v.size();}
+float Vector::elementAt(const int i) const
+{
+	return v[i];
+}
 
-bool Vector::isTransposed() const{return t;}
+int Vector::getDimension() const
+{
+	return v.size();
+}
+
+bool Vector::isTransposed() const
+{
+	return t;
+}
 
 ostream &operator<<(std::ostream &out, const Vector &vec)
 {

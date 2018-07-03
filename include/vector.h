@@ -28,6 +28,7 @@ public:
     Vector transposeNew() const; // Returns a copy of the current vector transposed
 
     // Utility
+    float elementAt(const int i) const; // Returns a copy of the element at index i
     int getDimension() const; // Returns the dimension of the vector, n
 	bool isTransposed() const; // Returns whether or not the vector is transposed
 	friend std::ostream &operator<<(std::ostream &out, const Vector &vec); // Prints the vector
