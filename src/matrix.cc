@@ -1,7 +1,8 @@
 #include <iostream>
 #include <vector>
-#include <../include/vector.h>
-#include <../include/matrix.h>
+
+#include "../include/vector.h"
+#include "../include/matrix.h"
 
 using namespace std;
 
