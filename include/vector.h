@@ -7,7 +7,7 @@ class Vector final
 	bool t;
 	std::vector<float> v;
 public:
-	// Constructor + Big 5
+	// Constructors + Big 5
 	Vector(int n=1, int x=0, bool t=false); // Creates a vector in R^n, all elements = x
 	Vector(const std::vector<float> &a, bool t=false);
 	~Vector();

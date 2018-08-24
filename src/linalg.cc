@@ -9,6 +9,8 @@
 
 using namespace std;
 
+// Commands
+const string HELP = "help";
 const string MAKE = "make";
 const string MAT = "matrix";
 const string VEC = "vector";
@@ -17,9 +19,15 @@ const string PRINT = "print";
 const string ADD = "add";
 const string SUBTRACT = "subtract";
 const string MULTIPLY = "multiply";
+const string NEGATE = "negate";
 
-void LinAlg::consumeVec()
-{
+// List of all commands (with the exception of help)
+const string COMMANDS[] = {
+	MAKE, MAT, VEC, TRANSPOSE, PRINT, ADD, SUBTRACT, MULTIPLY, NEGATE
+};
+
+// Create a vector from user input
+void LinAlg::consumeVec(){
 	string name;
 	int n;
 	float x;
@@ -32,10 +40,8 @@ void LinAlg::consumeVec()
 
 	vector<float> v(n);
 
-	for(int i = 0; i < n; ++i)
-	{
-		if(!(cin >> x))
-        {
+	for(int i = 0; i < n; ++i){
+		if(!(cin >> x)){
             if(cin.eof()) break;
             cin.clear();
             cin.ignore();
@@ -50,6 +56,7 @@ void LinAlg::consumeVec()
 	types[name] = VEC;
 }
 
+// Create a matrix from user input
 void LinAlg::consumeMat()
 {
 	string name;
@@ -67,12 +74,9 @@ void LinAlg::consumeMat()
 
 	vector<vector<float>> v(m, vector<float>(n));
 
-	for(int i = 0; i < m; ++i)
-	{
-		for(int j = 0; j < n; ++j)
-		{
-			if(!(cin >> x))
-	        {
+	for(int i = 0; i < m; ++i){
+		for(int j = 0; j < n; ++j){
+			if(!(cin >> x)){
 	            if(cin.eof()) break;
 	            cin.clear();
 	            cin.ignore();
@@ -88,8 +92,8 @@ void LinAlg::consumeMat()
 	types[name] = MAT;
 }
 
-void LinAlg::make()
-{
+// Make vectors and matrices
+void LinAlg::make(){
 	string type;
 	cin >> type;
 
@@ -98,28 +102,25 @@ void LinAlg::make()
 	else cout << "Invalid type." << endl << endl;
 }
 
-string LinAlg::getType(string name) const 
-{
+// Returns the type of an object (either vector or matrix)
+string LinAlg::getType(string name) const{
 	return types.at(name);
 }
 
-void LinAlg::transpose() const
-{
+// Transpose vectors and matrices
+void LinAlg::transpose() const{
 	string name, type;
 
 	cin >> name;
 	type = types.at(name);
 
-	if(type == VEC)
-	{
+	if(type == VEC){
 		Vector vec(vecs.at(name));
 		vec.transpose();
 
 		cout << name << " transposed:" << endl;
 		cout << vec << endl << endl;
-	}
-	else if(type == MAT)
-	{
+	}else if(type == MAT){
 		Matrix mat(mats.at(name));
 		mat.transpose();
 
@@ -128,8 +129,8 @@ void LinAlg::transpose() const
 	}
 }
 
-void LinAlg::add() const
-{
+// Add vectors and matrices
+void LinAlg::add() const{
 	string name1, name2, type1, type2;
 
 	cin >> name1;
@@ -138,8 +139,7 @@ void LinAlg::add() const
 	type1 = types.at(name1);
 	type2 = types.at(name2);
 
-	if(type1 == VEC && type2 == VEC)
-	{
+	if(type1 == VEC && type2 == VEC){
 		Vector lhs(vecs.at(name1));
 		Vector rhs(vecs.at(name2));
 
@@ -151,9 +151,7 @@ void LinAlg::add() const
 
 		cout << name1 << " + " << name2 << ":" << endl;
 		cout << lhs + rhs << endl << endl;
-	}
-	else if(type1 == MAT && type2 == MAT)
-	{
+	}else if(type1 == MAT && type2 == MAT){
 		Matrix lhs(mats.at(name1));
 		Matrix rhs(mats.at(name2));
 
@@ -165,15 +163,13 @@ void LinAlg::add() const
 
 		cout << name1 << " + " << name2 << ":" << endl;
 		cout << lhs + rhs << endl << endl;
-	}
-	else
-	{
-		cout << "Cannot add matrices and vectors." << endl;
+	}else{
+		cout << "Cannot add vectors and matrices." << endl;
 	}
 }
 
-void LinAlg::subtract() const
-{
+// Subtract vectors and matrices
+void LinAlg::subtract() const{
 	string name1, name2, type1, type2;
 
 	cin >> name1;
@@ -182,8 +178,7 @@ void LinAlg::subtract() const
 	type1 = types.at(name1);
 	type2 = types.at(name2);
 
-	if(type1 == VEC && type2 == VEC)
-	{
+	if(type1 == VEC && type2 == VEC){
 		Vector lhs(vecs.at(name1));
 		Vector rhs(vecs.at(name2));
 
@@ -195,9 +190,7 @@ void LinAlg::subtract() const
 
 		cout << name1 << " - " << name2 << ":" << endl;
 		cout << lhs - rhs << endl << endl;
-	}
-	else if(type1 == MAT && type2 == MAT)
-	{
+	}else if(type1 == MAT && type2 == MAT){
 		Matrix lhs(mats.at(name1));
 		Matrix rhs(mats.at(name2));
 
@@ -209,15 +202,13 @@ void LinAlg::subtract() const
 
 		cout << name1 << " - " << name2 << ":" << endl;
 		cout << lhs - rhs << endl << endl;
-	}
-	else
-	{
+	}else{
 		cout << "Cannot subtract matrices and vectors." << endl;
 	}
 }
 
-void LinAlg::multiply() const
-{
+// Multiply vectors and matrices
+void LinAlg::multiply() const{
 	string name1, name2, type1, type2;
 
 	cin >> name1;
@@ -226,8 +217,7 @@ void LinAlg::multiply() const
 	type1 = types.at(name1);
 	type2 = types.at(name2);
 
-	if(type1 == VEC && type2 == VEC)
-	{
+	if(type1 == VEC && type2 == VEC){
 		Vector lhs(vecs.at(name1));
 		Vector rhs(vecs.at(name2));
 
@@ -239,9 +229,7 @@ void LinAlg::multiply() const
 
 		cout << name1 << " * " << name2 << ":" << endl;
 		cout << lhs * rhs << endl << endl;
-	}
-	else if(type1 == MAT && type2 == MAT)
-	{
+	}else if(type1 == MAT && type2 == MAT){
 		Matrix lhs(mats.at(name1));
 		Matrix rhs(mats.at(name2));
 
@@ -253,9 +241,7 @@ void LinAlg::multiply() const
 
 		cout << name1 << " * " << name2 << ":" << endl;
 		cout << lhs * rhs << endl << endl;
-	}
-	else if(type1 == MAT && type2 == VEC)
-	{
+	}else if(type1 == MAT && type2 == VEC){
 		Matrix lhs(mats.at(name1));
 		Vector rhs(vecs.at(name2));
 
@@ -267,29 +253,55 @@ void LinAlg::multiply() const
 
 		cout << name1 << " * " << name2 << ":" << endl;
 		cout << lhs * rhs << endl << endl;
-	}
-	else
-	{
+	}else{
 		cout << "Cannot multiply this matrix and vector." << endl;
 	}
 }
 
-void LinAlg::printItem() const
-{
+
+// Negate vectors and matrices
+void LinAlg::negate() const{
+	string name, type;
+
+	cin >> name;
+
+	type = types.at(name);
+
+	if(type == VEC){
+		Vector vec(vecs.at(name));
+
+		cout << name << ":" << endl;
+		cout << vec << endl;
+
+		cout << name << " negated:" << endl;
+		cout << -vec << endl;
+
+	}else if(type == MAT){
+		Matrix mat(mats.at(name));
+
+		cout << name << ":" << endl;
+		cout << mat << endl;
+
+		cout << name << " negated:" << endl;
+		cout << -mat << endl;
+	}else{
+		cout << "The name does not match any vector or matrix saved, please try again." << endl;
+	}
+}
+
+// Print vectors and matrices
+void LinAlg::printItem() const{
 	string name, type;
 
 	cin >> name;
 	type = types.at(name);
 
-	if(type == VEC)
-	{
+	if(type == VEC){
 		Vector vec(vecs.at(name));
 
 		cout << "Vector " << name << ":" << endl;
 		cout << vec << endl << endl;
-	}
-	else if(type == MAT)
-	{
+	}else if(type == MAT){
 		Matrix mat(mats.at(name));
 
 		cout << "Matrix " << name << ":" << endl;
@@ -297,36 +309,31 @@ void LinAlg::printItem() const
 	}
 }
 
-void LinAlg::run(int argc, char** argv)
-{
+// Take user input
+void LinAlg::run(int argc, char** argv){
 	string command;
 
-	while(cin >> command)
-	{
+	cout << "Welcome to the Linear Algebra module!" << endl;
+	cout << "Please enter a command (type 'help' for a list of possible commands): ";
+
+	while(cin >> command){
 		if(cin.eof()) break;
 
-		if(command == MAKE)
-		{
+		if(command == HELP){
+			cout << "Here is a list of accepted commands:" << endl;
+			for(auto command : COMMANDS) cout << "- " << command << endl;
+			cout << endl;
+		}else if(command == MAKE){
 			make();
-		}
-		else if(command == TRANSPOSE)
-		{
+		}else if(command == TRANSPOSE){
 			transpose();
-		}
-		else if(command == ADD)
-		{
+		}else if(command == ADD){
 			add();
-		}
-		else if(command == SUBTRACT)
-		{
+		}else if(command == SUBTRACT){
 			subtract();
-		}
-		else if(command == MULTIPLY)
-		{
+		}else if(command == MULTIPLY){
 			multiply();
-		}
-		else if(command == PRINT)
-		{
+		}else if(command == PRINT){
 			printItem();
 		}
 	}

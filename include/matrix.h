@@ -21,7 +21,7 @@ public:
 	Matrix operator+(const Matrix &rhs) const; // Matrix addition
     Matrix operator-(const Matrix &rhs) const; // Matrix subtraction
     Matrix operator*(const Matrix &rhs) const; // Matrix-Matrix multiplication
-    Matrix operator*(const float a) const;  // Matrix-Real multiplication
+    Matrix operator*(const float a) const;  // Scalar multiplication
     Matrix operator-() const; // Matrix negation
 
     Vector operator*(const Vector &rhs) const; // Matrix-Vector multiplication
@@ -36,5 +36,5 @@ public:
 	friend std::ostream &operator<<(std::ostream &out, const Matrix &m);
 };
 
-Matrix operator*(const float a, const Matrix &mat); // Matrix-Real multiplication
+Matrix operator*(const float a, const Matrix &mat); // Scalar multiplication
 #endif

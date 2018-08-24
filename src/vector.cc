@@ -5,29 +5,34 @@
 
 using namespace std;
 
-// Constructor + Big 5
-Vector::Vector(int n, int x, bool t): t{t}
-{
+/* Constructors + Big 5 */
+
+// Constructor #1
+Vector::Vector(int n, int x, bool t): t{t}{
 	v.assign(n, x);
 }
 
+// Constructor #2
 Vector::Vector(const vector<float> &a, bool t): t{t}, v{a} {}
 
+// Destructor
 Vector::~Vector(){}
 
+// Copy constructor
 Vector::Vector(const Vector &other): t{other.t}, v{other.v}{}
 
+// Move constructor
 Vector::Vector(Vector &&other): t{std::move(other.t)}, v{std::move(other.v)}{}
 
-Vector &Vector::operator=(const Vector &other)
-{
+// Copy assignment
+Vector &Vector::operator=(const Vector &other){
 	t = other.t;
 	v = other.v;
 	return *this;
 }
 
-Vector &Vector::operator=(Vector &&other)
-{
+// Move assignment
+Vector &Vector::operator=(Vector &&other){
 	std::swap(t, other.t);
 	std::swap(v, other.v);
 
@@ -35,13 +40,11 @@ Vector &Vector::operator=(Vector &&other)
 }
 
 // Vector operations
-Vector Vector::operator+(const Vector &rhs) const
-{
+Vector Vector::operator+(const Vector &rhs) const{
 	const int n1 = this->getDimension();
 	const int n2 = rhs.getDimension();
 
-	if(n1 == n2)
-	{
+	if(n1 == n2){
 		vector<float> sum(n1);
 
 		for(int i = 0; i < n1; ++i) sum[i] = v[i] + rhs.v[i];
@@ -52,13 +55,12 @@ Vector Vector::operator+(const Vector &rhs) const
 	return Vector(); // Temp
 }
 
-Vector Vector::operator-(const Vector &rhs) const
-{
+// Subtract vectors
+Vector Vector::operator-(const Vector &rhs) const{
 	const int n1 = this->getDimension();
 	const int n2 = rhs.getDimension();
 
-	if(n1 == n2)
-	{
+	if(n1 == n2){
 		vector<float> diff(n1);
 
 		for(int i = 0; i < n1; ++i) diff[i] = v[i] - rhs.v[i];
@@ -69,13 +71,12 @@ Vector Vector::operator-(const Vector &rhs) const
 	return Vector(); // Temp
 }
 
-float Vector::operator*(const Vector &rhs) const
-{
+// Multiply vectors
+float Vector::operator*(const Vector &rhs) const{
 	const int n1 = this->getDimension();
 	const int n2 = rhs.getDimension();
 
-	if(n1 == n2)
-	{
+	if(n1 == n2){
 		float product = 0;
 
 		for(int i = 0; i < n1; ++i) product += v[i] * rhs.v[i];
@@ -86,8 +87,8 @@ float Vector::operator*(const Vector &rhs) const
 	return 0;
 }
 
-Vector Vector::operator*(const float a) const
-{
+// Vector-Real multiplication
+Vector Vector::operator*(const float a) const{
 	const int n = v.size();
 	vector<float> w(n);
 
@@ -95,10 +96,11 @@ Vector Vector::operator*(const float a) const
 	return Vector(w);
 }
 
+// Scalar multiplication
 Vector operator*(const float a, const Vector &vec){return vec * a;};
 
-Vector Vector::operator-() const
-{
+// Negate vectors
+Vector Vector::operator-() const{
 	const int n = v.size();
 	vector<float> neg(n);
 
@@ -107,38 +109,38 @@ Vector Vector::operator-() const
 	return Vector(neg);
 }
 
-// Transposition
+// Transpose current vector
 void Vector::transpose(){t = !t;}
 
+// Return a transposed copy of the current vector
 Vector Vector::transposeNew() const{return Vector(v, !t);}
 
-// Utility
-float Vector::elementAt(const int i) const
-{
+/* Utility */
+
+// Returns the element at index i
+float Vector::elementAt(const int i) const{
 	return v[i];
 }
 
-int Vector::getDimension() const
-{
+// Returns the vector dimension (n)
+int Vector::getDimension() const{
 	return v.size();
 }
 
-bool Vector::isTransposed() const
-{
+// Returns true if the vector is transposed and false otherwise
+bool Vector::isTransposed() const{
 	return t;
 }
 
-ostream &operator<<(std::ostream &out, const Vector &vec)
-{
+// Prints vectors
+ostream &operator<<(std::ostream &out, const Vector &vec){
 	const int n = vec.v.size();
 
 	out << '(';
-	for(int i = 0; i < n; ++i)
-	{
+	for(int i = 0; i < n; ++i){
 		out << vec.v[i];
 		if(i < n - 1) out << ", ";
-		else
-		{
+		else{
 			out << ')';
 			if(vec.isTransposed()) out << "^T";
 		}
