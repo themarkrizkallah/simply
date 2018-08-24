@@ -23,7 +23,7 @@ const string NEGATE = "negate";
 
 // List of all commands (with the exception of help)
 const string COMMANDS[] = {
-	MAKE, MAT, VEC, TRANSPOSE, PRINT, ADD, SUBTRACT, MULTIPLY, NEGATE
+	MAKE, TRANSPOSE, PRINT, ADD, SUBTRACT, MULTIPLY, NEGATE
 };
 
 // Create a vector from user input
