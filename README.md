@@ -1,5 +1,5 @@
 # simply
- Linear algebra modules that manipulate vectors, matrices, and (will) run the simplex &amp; shortest-path algorithms.
+ Linear algebra modules that manipulate vectors and matrices.
 
 ## Getting Started
 
